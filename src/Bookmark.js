@@ -3,16 +3,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
+
 const Bookmark = ({bookmarks}) => {
+
+
     return (
         <>
             {bookmarks.map((bookmark) => (
                 <div key={bookmark.id} className="card">
                     <div className="hover_card">
                         <div className="hover_content">
-                            <FontAwesomeIcon icon="book-reader" className="hover-icons"/>
-                            <FontAwesomeIcon icon="pencil-alt" className="hover-icons"/>
-                            <FontAwesomeIcon icon="trash-alt" className="hover-icons"/>
+                            <a className="hover-icons book-reader" href={bookmark.page_url} target="_blank">
+                                <FontAwesomeIcon icon="book-reader"/>
+                            </a>
+                            <div className="hover-icons">
+                                <FontAwesomeIcon icon="pencil-alt" />
+                            </div>
+                            <div className="hover-icons">
+                                <FontAwesomeIcon icon="trash-alt" />
+                            </div>
                         </div>
                     </div>
                     <div className="normal_card">

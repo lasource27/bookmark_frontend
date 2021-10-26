@@ -39,8 +39,10 @@ const App = () => {
     const bookmarksFromServer = async () => {
       const bookmarks = await fetchBookmarks()
       setBookmarks(bookmarks)
+      console.log(bookmarks)
     };
     bookmarksFromServer();
+    
     
   }, [])
 
