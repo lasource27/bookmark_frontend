@@ -12,15 +12,16 @@ library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faA
 
 const App = () => {
 
-  // const showFolders = () => {
-
-  // }
-
   const [folders, setFolders] = useState([])
   const [tags, setTags] = useState([])
   const [bookmarks, setBookmarks] = useState([])
   const [showFolders, setShowFolders] = useState(false)
   const [showTags, setShowTags] = useState(false)
+  const [titleBar, setTitleBar] = useState('All Bookmarks')
+  const [folderIcon, setFolderIcon] = useState(false)
+  const [tagIcon, setTagIcon] = useState(false)
+  const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
+  // false not 'false'???
 
   useEffect(() => {
     const foldersFromServer = async () => {
@@ -39,7 +40,6 @@ const App = () => {
     const bookmarksFromServer = async () => {
       const bookmarks = await fetchBookmarks()
       setBookmarks(bookmarks)
-      console.log(bookmarks)
     };
     bookmarksFromServer();
     
@@ -81,6 +81,11 @@ const App = () => {
     const data = await res.json()
     const all_bookmarks = await fetchBookmarks()
     setBookmarks(all_bookmarks.filter(bookmark => data.bookmark.includes(bookmark.id)))
+    setTitleBar(data.name)
+    setFolderIcon(true)
+    setTagIcon(false)
+    setAllbookmarkIcon(false)
+    
     
   }
 
@@ -89,16 +94,39 @@ const App = () => {
     const data = await res.json()
     const all_bookmarks = await fetchBookmarks()
     setBookmarks(all_bookmarks.filter(bookmark => data.bookmark.includes(bookmark.id)))
+    setTitleBar(data.name)
+    setFolderIcon(false)
+    setTagIcon(true)
+    setAllbookmarkIcon(false)
+    
+
   }
 
   const show_all_bookmarks = async () => {
     const bookmarks = await fetchBookmarks()
     setBookmarks(bookmarks)
+    setTitleBar('All Bookmarks')
+    setFolderIcon(false)
+    setTagIcon(false)
+    setAllbookmarkIcon(true)
   }
 
- 
+  const onDelete = async (id) => {
+    const res = await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`, {
+      method: 'DELETE',
+     })
+    
+    const bookmarksFromServer = async () => {
+      const bookmarks = await fetchBookmarks()
+      setBookmarks(bookmarks)
+    };
+    bookmarksFromServer();
 
-  return (
+    
+  }
+
+    console.log(folderIcon,tagIcon,allbookmarkIcon)
+    return (
     <div className="container">
       <div className="navigation">
         <div className="userHeader">
@@ -164,10 +192,13 @@ const App = () => {
       <div className="showcase">
         <div className="searchBar">
         </div>
-        <div className="filterBar">
-        </div>
-        <div className="bookmarkArea">
-          <Bookmark bookmarks={bookmarks}/>
+        <div className="main">
+          <div className="titleBar">
+            {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor-icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor-icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor-icons"/>}<h2>{titleBar}</h2>
+          </div>
+          <div className="bookmarkArea">
+            <Bookmark bookmarks={bookmarks} onDelete={onDelete}/>
+          </div>
         </div>
       </div>
     </div>

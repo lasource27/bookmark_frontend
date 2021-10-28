@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-const Bookmark = ({bookmarks}) => {
+const Bookmark = ({bookmarks, onDelete}) => {
 
 
     return (
@@ -19,7 +19,7 @@ const Bookmark = ({bookmarks}) => {
                             <div className="hover-icons">
                                 <FontAwesomeIcon icon="pencil-alt" />
                             </div>
-                            <div className="hover-icons">
+                            <div className="hover-icons" onClick={() => onDelete(bookmark.id)}>
                                 <FontAwesomeIcon icon="trash-alt" />
                             </div>
                         </div>
