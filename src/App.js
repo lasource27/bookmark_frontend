@@ -21,7 +21,7 @@ const App = () => {
   const [folderIcon, setFolderIcon] = useState(false)
   const [tagIcon, setTagIcon] = useState(false)
   const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
-  // false not 'false'???
+  // false not 'false'
 
   useEffect(() => {
     const foldersFromServer = async () => {
