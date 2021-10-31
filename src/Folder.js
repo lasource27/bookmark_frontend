@@ -5,15 +5,15 @@ const Folder = ({folders, folder_bookmark}) => {
         <div>
             <ul>
                 {folders.map((folder) => (
-                    <div key={folder.id} className="row-wrap" onClick={() => folder_bookmark(folder.id)}> 
-                        <div className="row-control">
-                            <div className="row-name-sub">
-                                <FontAwesomeIcon icon={["far", "folder"]} className="decor-icons"/>
+                    <div key={folder.id} className="row_wrap" onClick={() => folder_bookmark(folder.id)}> 
+                        <div className="row_control">
+                            <div className="row_name_sub">
+                                <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/>
                                 <div className="folder_name" >{folder.name}</div>
                             </div>
-                            <div className="icon-right">
-                                <div className="link-control-sub">
-                                    <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link-icons"/>
+                            <div className="icon_right">
+                                <div className="link_control_sub">
+                                    <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link_icons"/>
                                 </div>
                             </div>       
                         </div>

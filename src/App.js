@@ -2,12 +2,15 @@ import { useState, useEffect } from "react"
 import Folder from './Folder'
 import Tag from './Tag'
 import Bookmark from './Bookmark'
+import Searchbar from "./Searchbar"
+import Addbutton from "./Addbutton"
+import Sortbutton from "./Sortbutton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
 import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
 
-library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt)
+library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar)
 
 
 const App = () => {
@@ -22,6 +25,7 @@ const App = () => {
   const [tagIcon, setTagIcon] = useState(false)
   const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
   // false not 'false'
+  
 
   useEffect(() => {
     const foldersFromServer = async () => {
@@ -48,14 +52,12 @@ const App = () => {
 
   const fetchFolders = async () => {
     const res = await fetch('http://127.0.0.1:8000/backend/folder-list')
-    console.log(res)
     const data = await res.json()
     return data
   }
 
   const fetchTags = async () => {
     const res = await fetch('http://127.0.0.1:8000/backend/tag-list')
-    console.log(res)
     const data = await res.json()
     return data
   }
@@ -112,7 +114,7 @@ const App = () => {
   }
 
   const onDelete = async (id) => {
-    const res = await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`, {
+    await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`, {
       method: 'DELETE',
      })
     
@@ -121,33 +123,37 @@ const App = () => {
       setBookmarks(bookmarks)
     };
     bookmarksFromServer();
-
-    
   }
 
-    console.log(folderIcon,tagIcon,allbookmarkIcon)
+  const search_bookmark = async (search_input) => {
+    const all_bookmarks = await fetchBookmarks()
+    setBookmarks(all_bookmarks.filter((bookmark) => bookmark.title.toLowerCase().includes(search_input.toLowerCase())))
+  }
+
+ 
+
     return (
     <div className="container">
       <div className="navigation">
         <div className="userHeader">
           <div className="userName">
-              <div className="link-control">              
-                <FontAwesomeIcon icon={["fas", "user"]} className="decor-icons"/>
+              <div className="link_control">              
+                <FontAwesomeIcon icon={["fas", "user"]} className="decor_icons"/>
                 <h5>freesia</h5>               
               </div>
           </div>
 
           <div className="headerEllipsis">
-            <div className="link-control">
-              <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link-icons"/>
+            <div className="link_control">
+              <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link_icons"/>
             </div>
           </div>
         </div>
         
         <div className="all_bookmarks" >
-          <div className="row-control" onClick={show_all_bookmarks}>
-            <div className="row-name">
-              <FontAwesomeIcon icon="bookmark" className="decor-icons"/>
+          <div className="row_control" onClick={show_all_bookmarks}>
+            <div className="row_name">
+              <FontAwesomeIcon icon="bookmark" className="decor_icons"/>
               <h5>All bookmarks</h5>
             </div>
             
@@ -155,15 +161,15 @@ const App = () => {
           
         </div>
         <div className="folders">
-          <div className="row-wrap" onClick={folderToggle}>
-            <div className="row-control">
-              <div className="row-name">
-                {showFolders ? <FontAwesomeIcon icon={["fas", "folder-open"]} className="decor-icons"/> : <FontAwesomeIcon icon={["fas", "folder"]} className="decor-icons"/>}
+          <div className="row_wrap" onClick={folderToggle}>
+            <div className="row_control">
+              <div className="row_name">
+                {showFolders ? <FontAwesomeIcon icon={["fas", "folder-open"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "folder"]} className="decor_icons"/>}
                 <h5>Folders</h5>
               </div>
-              <div className="icon-right">
-                <div className="link-control">
-                  {showFolders ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link-icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link-icons"/>}
+              <div className="icon_right">
+                <div className="link_control">
+                  {showFolders ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link_icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/>}
                 </div>
               </div>
             </div>
@@ -172,15 +178,15 @@ const App = () => {
         </div>
         
         <div className="tags">
-          <div className="row-wrap" onClick={tagToggle}>
-            <div className="row-control">
-              <div className="row-name">
-                {showTags ? <FontAwesomeIcon icon={["fas", "user-tag"]} className="decor-icons"/> : <FontAwesomeIcon icon={["fas", "tags"]} className="decor-icons"/>}
+          <div className="row_wrap" onClick={tagToggle}>
+            <div className="row_control">
+              <div className="row_name">
+                {showTags ? <FontAwesomeIcon icon={["fas", "user-tag"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "tags"]} className="decor_icons"/>}
                 <h5>Tags</h5>
               </div>
-              <div className="icon-right">
-                <div className="link-control">
-                  {showTags ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link-icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link-icons"/>}
+              <div className="icon_right">
+                <div className="link_control">
+                  {showTags ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link_icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/>}
                 </div>
               </div>
             </div>
@@ -190,13 +196,19 @@ const App = () => {
       </div>
 
       <div className="showcase">
-        <div className="searchBar">
+        <div className="function_bar">
+          <Searchbar search_bookmark={search_bookmark} />
+          <div className="function_button">
+            <Addbutton />
+            <Sortbutton />
+          </div>
+          
         </div>
         <div className="main">
-          <div className="titleBar">
-            {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor-icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor-icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor-icons"/>}<h2>{titleBar}</h2>
+          <div className="title_bar">
+            {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
           </div>
-          <div className="bookmarkArea">
+          <div className="bookmark_area">
             <Bookmark bookmarks={bookmarks} onDelete={onDelete}/>
           </div>
         </div>

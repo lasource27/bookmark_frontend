@@ -13,13 +13,13 @@ const Bookmark = ({bookmarks, onDelete}) => {
                 <div key={bookmark.id} className="card">
                     <div className="hover_card">
                         <div className="hover_content">
-                            <a className="hover-icons book-reader" href={bookmark.page_url} target="_blank">
+                            <a className="hover_icons" href={bookmark.page_url} target="_blank">
                                 <FontAwesomeIcon icon="book-reader"/>
                             </a>
-                            <div className="hover-icons">
+                            <div className="hover_icons">
                                 <FontAwesomeIcon icon="pencil-alt" />
                             </div>
-                            <div className="hover-icons" onClick={() => onDelete(bookmark.id)}>
+                            <div className="hover_icons" onClick={() => onDelete(bookmark.id)}>
                                 <FontAwesomeIcon icon="trash-alt" />
                             </div>
                         </div>
