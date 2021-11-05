@@ -13,7 +13,7 @@ const Bookmark = ({bookmarks, onDelete}) => {
                 <div key={bookmark.id} className="card">
                     <div className="hover_card">
                         <div className="hover_content">
-                            <a className="hover_icons" href={bookmark.page_url} target="_blank">
+                            <a className="hover_icons" href={bookmark.page_url} target="_blank" rel="noreferrer">
                                 <FontAwesomeIcon icon="book-reader"/>
                             </a>
                             <div className="hover_icons">

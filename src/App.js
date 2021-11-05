@@ -130,7 +130,7 @@ const App = () => {
     setBookmarks(all_bookmarks.filter((bookmark) => bookmark.title.toLowerCase().includes(search_input.toLowerCase())))
   }
 
- 
+  
 
     return (
     <div className="container">
