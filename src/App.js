@@ -130,7 +130,29 @@ const App = () => {
     setBookmarks(all_bookmarks.filter((bookmark) => bookmark.title.toLowerCase().includes(search_input.toLowerCase())))
   }
 
-  
+  const add_task = async (page_url) => {
+      // fetch(`http://127.0.0.1:8000/backend/bookmark-create/?page_url=${page_url}`, {
+      //     method: 'POST',
+      //     headers: {
+      //         'Content-type': 'application/json',
+      //     },
+      // }).then(x => x.json()).then(json => {
+      //     console.log(json);
+      // })
+
+      const res = await fetch('http://127.0.0.1:8000/backend/bookmark-create/', {
+          method: 'POST',
+          headers: {
+              'Content-type': 'application/json',
+          },
+          body: JSON.stringify(page_url)
+      })
+      const data = await res.json()
+      console.log(data)
+
+      const bookmarks = await fetchBookmarks()
+      setBookmarks(bookmarks)
+  }
 
     return (
     <div className="container">
@@ -199,7 +221,7 @@ const App = () => {
         <div className="function_bar">
           <Searchbar search_bookmark={search_bookmark} />
           <div className="function_button">
-            <Addbutton />
+            <Addbutton add_task={add_task}/>
             <Sortbutton />
           </div>
           

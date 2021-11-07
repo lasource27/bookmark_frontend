@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Bookmark = ({bookmarks, onDelete}) => {
-
-
+    const reversed_bookmarks = [...bookmarks].reverse()
+    
     return (
         <>
-            {bookmarks.map((bookmark) => (
+            {reversed_bookmarks.map((bookmark) => (
                 <div key={bookmark.id} className="card">
                     <div className="hover_card">
                         <div className="hover_content">

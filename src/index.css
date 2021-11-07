@@ -189,7 +189,7 @@ input:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: lightgrey;
+  background: rgb(161, 161, 161);
   border-radius: 5px;
 }
 
