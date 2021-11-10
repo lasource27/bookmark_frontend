@@ -24,6 +24,8 @@ const App = () => {
   const [folderIcon, setFolderIcon] = useState(false)
   const [tagIcon, setTagIcon] = useState(false)
   const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
+  const [loader, setLoader] = useState(false)
+  
   // false not 'false'
   
 
@@ -128,6 +130,7 @@ const App = () => {
   const search_bookmark = async (search_input) => {
     const all_bookmarks = await fetchBookmarks()
     setBookmarks(all_bookmarks.filter((bookmark) => bookmark.title.toLowerCase().includes(search_input.toLowerCase())))
+    
   }
 
   const add_task = async (page_url) => {
@@ -139,7 +142,7 @@ const App = () => {
       // }).then(x => x.json()).then(json => {
       //     console.log(json);
       // })
-
+      setLoader(true)
       const res = await fetch('http://127.0.0.1:8000/backend/bookmark-create/', {
           method: 'POST',
           headers: {
@@ -147,11 +150,16 @@ const App = () => {
           },
           body: JSON.stringify(page_url)
       })
+     
+
       const data = await res.json()
+      
       console.log(data)
 
       const bookmarks = await fetchBookmarks()
       setBookmarks(bookmarks)
+      setLoader(false)
+      
   }
 
     return (
@@ -231,7 +239,7 @@ const App = () => {
             {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
           </div>
           <div className="bookmark_area">
-            <Bookmark bookmarks={bookmarks} onDelete={onDelete}/>
+            <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete}/>
           </div>
         </div>
       </div>

@@ -122,7 +122,9 @@ input:focus {
 .tag_name,
 .all_bookmarks h5,
 .folders h5,
-.tags h5 {
+.tags h5,
+.searchbar_input
+ {
   font-size: 0.8rem;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -196,6 +198,8 @@ input:focus {
 .card {
   position: relative;
   margin: 5px;
+  width: 100%;
+  height: 100%;
 }
 
 .normal_card {
@@ -207,6 +211,7 @@ input:focus {
 	box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 	padding: 10px;
   height: 340px;
+
   /* height: 100%; */
   
 }
@@ -215,7 +220,7 @@ input:focus {
   display:flex;
   justify-content: center;
   background-color:rgba(192,192,192,0.3);
-  height: 100%;
+  height: 340px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -231,9 +236,10 @@ input:focus {
 
 .hover_content {
   display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 1.5rem;
+  position: absolute;
+  top: 23%;
+  
 }
 
 .preview_image img { 
@@ -324,13 +330,16 @@ input:focus {
   align-items: center;
   height: 30px;
   width: 40px;
-  margin: 5px;
+  margin: 7px;
   padding: 5px;
   color: grey;
   font-size: 1rem;
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
+
+  
+
 }
 
 .title_bar {
@@ -459,7 +468,7 @@ input:focus {
 }
 
 .addbutton:hover {
-  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);
 }
 
 .addbutton .dropdown_menu {
@@ -520,3 +529,17 @@ input:focus {
   margin-top: 10px;
   cursor: pointer;
 }
+
+/* .skeleton {
+  animation: skeleton 1s linear infinite alternate;
+}
+
+@keyframes skeleton {
+  0% {
+    background-color: hsl(200, 20%, 70%);
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+} */

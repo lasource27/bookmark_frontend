@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-const Bookmark = ({bookmarks, onDelete}) => {
+const Bookmark = ({bookmarks, loader, onDelete}) => {
     const reversed_bookmarks = [...bookmarks].reverse()
     
     return (
         <>
+            {loader ? 
+            <div className="card">
+                <div className="normal_card"></div>
+            </div>
+            :
+            ""}
+
             {reversed_bookmarks.map((bookmark) => (
                 <div key={bookmark.id} className="card">
                     <div className="hover_card">
@@ -25,7 +32,7 @@ const Bookmark = ({bookmarks, onDelete}) => {
                         </div>
                     </div>
                     <div className="normal_card">
-                        <div className="preview_image">
+                        <div className="preview_image skeleton">
                             <img src={bookmark.preview_image} alt=""></img>
                         </div>
 

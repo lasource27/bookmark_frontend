@@ -6,10 +6,12 @@ const Addbutton = ({dropdown_list, add_task}) => {
    
     const [showDropdown, setShowDropdown] = useState(false)
     const [page_url, setPage_url] = useState("")
+    
   
     const onSubmit = (e) => {
         e.preventDefault()
         add_task(page_url)
+        
     }
     
     return (
