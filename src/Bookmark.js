@@ -11,7 +11,26 @@ const Bookmark = ({bookmarks, loader, onDelete}) => {
         <>
             {loader ? 
             <div className="card">
-                <div className="normal_card"></div>
+                <div className="normal_card">
+                    <div className="preview_image skeleton"></div>
+                    <div className="preview_text">
+                        <div className="bookmark_title">
+                            <div className="skeleton skeleton_text"></div>
+                            <div className="skeleton skeleton_text"></div>
+                        </div>
+                        <div className="preview_description_wrap">
+                            <div className="preview_description">
+                                <div className="skeleton skeleton_text"></div>
+                                <div className="skeleton skeleton_text"></div>
+                                <div className="skeleton skeleton_text"></div>
+                            </div>
+                        </div>
+                        <div className="text_footnote">
+                            <div className="skeleton skeleton_footnote"></div>
+                            <div className="skeleton skeleton_footnote"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             :
             ""}
@@ -32,7 +51,7 @@ const Bookmark = ({bookmarks, loader, onDelete}) => {
                         </div>
                     </div>
                     <div className="normal_card">
-                        <div className="preview_image skeleton">
+                        <div className="preview_image">
                             <img src={bookmark.preview_image} alt=""></img>
                         </div>
 
