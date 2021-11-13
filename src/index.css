@@ -531,6 +531,18 @@ input:focus {
   cursor: pointer;
 }
 
+.inactive_button {
+  background-color: rgb(184, 183, 183);
+  cursor: wait;
+}
+
+.inactive_input {
+  background-color: rgb(209, 208, 208);
+  color: rgb(177, 175, 175);
+  border-width: 0;
+  
+}
+
 .skeleton {
   animation: skeleton 1s linear infinite alternate;
 }

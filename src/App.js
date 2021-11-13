@@ -25,9 +25,12 @@ const App = () => {
   const [tagIcon, setTagIcon] = useState(false)
   const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
   const [loader, setLoader] = useState(false)
+  const [addbutton_submit, setAddbutton_submit] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
   
   // false not 'false'
   
+  console.log("render")
 
   useEffect(() => {
     const foldersFromServer = async () => {
@@ -49,6 +52,7 @@ const App = () => {
     };
     bookmarksFromServer();
     
+    console.log("useeffect")
     
   }, [])
 
@@ -142,6 +146,7 @@ const App = () => {
       // }).then(x => x.json()).then(json => {
       //     console.log(json);
       // })
+      setAddbutton_submit(true)
       setLoader(true)
       const res = await fetch('http://127.0.0.1:8000/backend/bookmark-create/', {
           method: 'POST',
@@ -158,9 +163,13 @@ const App = () => {
 
       const bookmarks = await fetchBookmarks()
       setBookmarks(bookmarks)
+      setAddbutton_submit(false)
       setLoader(false)
       
+      
   }
+
+    
 
     return (
     <div className="container">
@@ -229,7 +238,7 @@ const App = () => {
         <div className="function_bar">
           <Searchbar search_bookmark={search_bookmark} />
           <div className="function_button">
-            <Addbutton add_task={add_task}/>
+            <Addbutton add_task={add_task} addbutton_submit={addbutton_submit}/>
             <Sortbutton />
           </div>
           
