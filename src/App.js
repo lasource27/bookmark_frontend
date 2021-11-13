@@ -26,11 +26,13 @@ const App = () => {
   const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
   const [loader, setLoader] = useState(false)
   const [addbutton_submit, setAddbutton_submit] = useState(false)
+
   const [showDropdown, setShowDropdown] = useState(false)
+  
+  
   
   // false not 'false'
   
-  console.log("render")
 
   useEffect(() => {
     const foldersFromServer = async () => {
@@ -51,8 +53,6 @@ const App = () => {
       setBookmarks(bookmarks)
     };
     bookmarksFromServer();
-    
-    console.log("useeffect")
     
   }, [])
 
@@ -165,11 +165,22 @@ const App = () => {
       setBookmarks(bookmarks)
       setAddbutton_submit(false)
       setLoader(false)
+      setShowDropdown(false)
       
       
   }
 
+    const handle_hidedropdown = () => {
+      setShowDropdown(false)
+    }
     
+
+    const  toggle_showdropdown = () => {
+      
+      setShowDropdown(!showDropdown)
+      // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
+    }
+     
 
     return (
     <div className="container">
@@ -238,7 +249,7 @@ const App = () => {
         <div className="function_bar">
           <Searchbar search_bookmark={search_bookmark} />
           <div className="function_button">
-            <Addbutton add_task={add_task} addbutton_submit={addbutton_submit}/>
+            <Addbutton add_task={add_task} addbutton_submit={addbutton_submit} showDropdown={showDropdown} toggle_showdropdown={toggle_showdropdown} handle_hidedropdown={handle_hidedropdown}/>
             <Sortbutton />
           </div>
           
