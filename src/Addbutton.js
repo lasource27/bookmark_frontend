@@ -9,20 +9,27 @@ const Addbutton = ({dropdown_list, add_task, addbutton_submit, showDropdown, han
     
     let menuRef = useRef()
 
+    const refListener = (event) => {
+        console.log(showDropdown,"event handler called")
+        if (showDropdown && !menuRef.current.contains(event.target)) {
+            handle_hidedropdown()
+        }
+    }
+
     useEffect(() => {
-        document.addEventListener("mousedown", (event) => {
-            if (menuRef.current != undefined && !menuRef.current.contains(event.target)) {
-                handle_hidedropdown()
-            }
-        })
-    })
+            document.addEventListener("mousedown", refListener);
+
+            return () => {
+            document.removeEventListener("mousedown", refListener);
+        } 
+
+    }, [showDropdown])
   
     const onSubmit = async (e) => {
         e.preventDefault()
         await add_task(page_url)
         // wait until the task has been added to clear the "page_url"
         setPage_url("")
-        
     }
 
     

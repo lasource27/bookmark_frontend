@@ -5,8 +5,8 @@ const Tag = ({tags, tag_bookmark}) => {
         <div>
             <ul>
                 {tags.map((tag) => (
-                    <div className="row-wrap" onClick={() => tag_bookmark(tag.id)}> 
-                        <div key={tag.id} className="row_control">
+                    <div key={tag.id} className="row-wrap" onClick={() => tag_bookmark(tag.id)}> 
+                        <div className="row_control">
                             <div className="row_name_sub">
                                 <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>
                                 <div className="tag_name">{tag.name}</div>
