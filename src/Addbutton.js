@@ -11,7 +11,7 @@ const Addbutton = ({dropdown_list, add_task, addbutton_submit, showDropdown, han
 
     const refListener = (event) => {
         console.log(showDropdown,"event handler called")
-        if (showDropdown && !menuRef.current.contains(event.target)) {
+        if (!menuRef.current.contains(event.target)) {
             handle_hidedropdown()
         }
     }

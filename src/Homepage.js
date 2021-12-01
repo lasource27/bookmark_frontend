@@ -14,6 +14,7 @@ import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
 
 
 
+
 library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar)
 
 
@@ -184,6 +185,7 @@ const Homepage = () => {
         // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
       }
        
+      
   
     return (
         <div className="container">
@@ -194,7 +196,8 @@ const Homepage = () => {
                     <div className="userName">
                         <div className="link_control">              
                             <FontAwesomeIcon icon={["fas", "user"]} className="decor_icons"/>
-                            <Link to="/login" style={{ textDecoration: 'none', color: "rgb(54, 53, 53)"}}>Log in</Link>               
+                            <Link to="/login" style={{ textDecoration: 'none', color: "rgb(54, 53, 53)"}}>Log in</Link>
+                                        
                         </div>
                     </div>
                     <div className="headerEllipsis">
