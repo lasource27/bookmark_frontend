@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
 import Folder from './Folder'
 import Tag from './Tag'
@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
 import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
+// import { useContext } from 'react/cjs/react.development'
+import AuthContext from './context/AuthContext'
 
 
 
@@ -33,7 +35,8 @@ const Homepage = () => {
   
     const [showDropdown, setShowDropdown] = useState(false)
     
-    
+    const {user} = useContext(AuthContext)
+    const {authTokens} = useContext(AuthContext)
     
     // false not 'false'
     
@@ -73,8 +76,15 @@ const Homepage = () => {
     }
   
     const fetchBookmarks = async () => {
-      const res = await fetch('http://127.0.0.1:8000/backend/bookmark-list')
+      const res = await fetch('http://127.0.0.1:8000/backend/bookmark-list',{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
       const data = await res.json()
+      console.log(data)
       
       return data
     }
@@ -196,7 +206,7 @@ const Homepage = () => {
                     <div className="userName">
                         <div className="link_control">              
                             <FontAwesomeIcon icon={["fas", "user"]} className="decor_icons"/>
-                            <Link to="/login" style={{ textDecoration: 'none', color: "rgb(54, 53, 53)"}}>Log in</Link>
+                            <Link to="/login" style={{ textDecoration: 'none', color: "rgb(54, 53, 53)"}}>Hi, {user.username}</Link>
                                         
                         </div>
                     </div>

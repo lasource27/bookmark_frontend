@@ -7,11 +7,10 @@ const Loginpage = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    let {user} = useContext(AuthContext)
-    let {loginUser} = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
+    const {loginUser} = useContext(AuthContext)
     return (
         <div>
-            <p>hello, {user}</p>   
             <form onSubmit={loginUser}>
                 <div className="form_control">
                     <label>Email</label>
@@ -22,7 +21,6 @@ const Loginpage = () => {
                     <input type="password" name="password" value={password} onChange={(e)=> {setPassword(e.target.value)}} placeholder="password"/>
                 </div>
                 <input type="submit" value="Log in" className="button_control"/>
-                <Link to="/" style={{ textDecoration: 'none'}} className="button_control">Home</Link>
             </form>
         </div>
     )
