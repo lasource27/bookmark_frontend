@@ -52,7 +52,7 @@ export const AuthProvider = ({children}) => {
             headers: {
                 'Content-Type':'application/json',
             },
-            body:JSON.stringify({'refresh':authTokens.refresh})
+            body:JSON.stringify({'refresh':authTokens?.refresh})
         })
 
         const data = await response.json()
@@ -64,16 +64,28 @@ export const AuthProvider = ({children}) => {
             logoutUser()
         }
 
+        if(loading){
+            setLoading(false)
+        }
+
+        // 👆update第一次后，不需要再次update，否则每次update，authToken变化，导致useeffect重新render,陷入死循环
+
     }
 
     let contextData = {
         loginUser: loginUser,
+        logoutUser: logoutUser,
         user: user,
         authTokens: authTokens,
     }
 
 
     useEffect(() => {
+
+        if(loading){
+            updateToken()
+            console.log("useeffect loading called")
+        }
         console.log('effect called')
         let access_token_interval = 1000 * 60 * 4
         let interval = setInterval(() => {
@@ -86,14 +98,14 @@ export const AuthProvider = ({children}) => {
             console.log('cleanup called')
             clearInterval(interval);
         }
-    },[authTokens,])
+    },[authTokens,loading])
     
-    
+    //@@@why add loading in []
     
     return (
         <AuthContext.Provider value={contextData}>
-            {children}
-            {/* {loading ? null : children} */}
+            {loading ? null : children}
+            {/* 👆确定updateToken调用完毕，更新了access token，然后再render children.因为children需要用到最新的access token才能render自己的内容 */}
         </AuthContext.Provider>
     )
 }

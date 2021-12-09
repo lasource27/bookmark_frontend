@@ -36,7 +36,7 @@ const Homepage = () => {
     const [showDropdown, setShowDropdown] = useState(false)
     
     const {user} = useContext(AuthContext)
-    const {authTokens} = useContext(AuthContext)
+    const {authTokens, logoutUser} = useContext(AuthContext)
     
     // false not 'false'
     
@@ -84,9 +84,14 @@ const Homepage = () => {
         }
       })
       const data = await res.json()
-      console.log(data)
+      if (res.status === 200){
+        return data
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+     
       
-      return data
+      
     }
   
     const folderToggle = () => {
