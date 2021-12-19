@@ -14,7 +14,7 @@ const Loginpage = () => {
             <form onSubmit={loginUser}>
                 <div className="form_control">
                     <label>Email</label>
-                    <input type="text" name="username" value={username} onChange={(e)=> {setUsername(e.target.value)}} placeholder="username"/>
+                    <input type="text" name="email" value={username} onChange={(e)=> {setUsername(e.target.value)}} placeholder="username"/>
                 </div>
                 <div className="form_control">
                     <label>Password</label>

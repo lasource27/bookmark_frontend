@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => {
             headers: {
                 'Content-Type':'application/json',
             },
-            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+            body:JSON.stringify({'email':e.target.email.value, 'password':e.target.password.value})
         })
 
         const data = await response.json()
@@ -52,7 +52,7 @@ export const AuthProvider = ({children}) => {
             headers: {
                 'Content-Type':'application/json',
             },
-            body:JSON.stringify({'refresh':authTokens?.refresh})
+            body:JSON.stringify({'refresh': authTokens?.refresh})
         })
 
         const data = await response.json()
