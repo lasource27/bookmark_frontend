@@ -4,6 +4,7 @@ import { AuthProvider } from "./context/AuthContext"
 
 import Homepage from "./Homepage"
 import Loginpage from "./Loginpage"
+import Registerpage from "./Registerpage"
 import PrivateRoute from "./utils/PrivateRoute"
 
 
@@ -16,6 +17,7 @@ const App = () => {
         <AuthProvider>
           <PrivateRoute component={Homepage} path="/" exact/>
           <Route component={Loginpage} path="/login" exact/>
+          <Route component={Registerpage} path="/register" exact/>
         </AuthProvider>
       </Router>
   )

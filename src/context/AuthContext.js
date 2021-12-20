@@ -72,9 +72,24 @@ export const AuthProvider = ({children}) => {
 
     }
 
+
+    const registerUser = async(e) => {
+        e.preventDefault()
+        const response = await fetch('http://127.0.0.1:8000/backend/register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify({'username':e.target.username.value, 'email':e.target.email.value, 'password':e.target.password.value})
+        })
+        const data = await response.json()
+        console.log("data:",data)
+    }
+
     let contextData = {
         loginUser: loginUser,
         logoutUser: logoutUser,
+        registerUser: registerUser,
         user: user,
         authTokens: authTokens,
     }
