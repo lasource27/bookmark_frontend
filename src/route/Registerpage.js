@@ -2,7 +2,6 @@ import React, {useContext} from 'react'
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
-import { Message } from 'semantic-ui-react'
 
 
 
@@ -56,17 +55,13 @@ const Registerpage = () => {
                 </div>
                 <input type="submit" value="Register" className="button_control"/>
                 {registerSuccess ? 
-                    <Message positive>
-                        <Message.Header>Your user registration was successful</Message.Header>
-                        <p>Please go to {registerFeedback} and verify your email.</p>
-                    </Message>
+                    <p>
+                        Your user registration was successful.
+                        Please go to {registerFeedback} and verify your email.
+                    </p>
                     :
-                    registerFeedback.map(x => (
-                    <Message negative>
-                        <Message.Header>
-                            {x}
-                        </Message.Header>
-                    </Message>))}
+                    registerFeedback.map(x => <p>{x}</p>)
+                }
             </form>
         </div>
     )
