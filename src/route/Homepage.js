@@ -1,18 +1,18 @@
 import React from 'react'
 import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
-import Folder from './Folder'
-import Tag from './Tag'
-import Bookmark from './Bookmark'
-import Searchbar from "./Searchbar"
-import Addbutton from "./Addbutton"
-import Sortbutton from "./Sortbutton"
+import Folder from '../component/Folder'
+import Tag from '../component/Tag'
+import Bookmark from '../component/Bookmark'
+import Searchbar from "../component/Searchbar"
+import Addbutton from "../component/Addbutton"
+import Sortbutton from "../component/Sortbutton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
 import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
 // import { useContext } from 'react/cjs/react.development'
-import AuthContext from './context/AuthContext'
+import AuthContext from '../context/AuthContext'
 
 
 

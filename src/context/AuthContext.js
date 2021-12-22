@@ -1,6 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect  } from "react";
 import jwt_decode from "jwt-decode";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 
 const AuthContext = createContext()
@@ -11,8 +11,13 @@ export const AuthProvider = ({children}) => {
     
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     const [user, setUser] =  useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
-    const history = useHistory()
     const [loading, setLoading] = useState(true)
+    
+    const history = useHistory()
+    const location = useLocation()
+    
+
+    
 
     const loginUser = async(e) => {
         e.preventDefault()
@@ -43,7 +48,7 @@ export const AuthProvider = ({children}) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        history.push('/')
+        history.push('/login')
     }
 
     const updateToken = async() => {
@@ -61,7 +66,9 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         } else {
-            logoutUser()
+            if (location.pathname == "/"){
+                logoutUser()
+            }
         }
 
         if(loading){
@@ -73,23 +80,10 @@ export const AuthProvider = ({children}) => {
     }
 
 
-    const registerUser = async(e) => {
-        e.preventDefault()
-        const response = await fetch('http://127.0.0.1:8000/backend/register/', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json',
-            },
-            body:JSON.stringify({'username':e.target.username.value, 'email':e.target.email.value, 'password':e.target.password.value})
-        })
-        const data = await response.json()
-        console.log("data:",data)
-    }
-
+    
     let contextData = {
         loginUser: loginUser,
         logoutUser: logoutUser,
-        registerUser: registerUser,
         user: user,
         authTokens: authTokens,
     }
@@ -97,20 +91,22 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
 
+        console.log(location.pathname)
+        
         if(loading){
             updateToken()
-            console.log("useeffect loading called")
+            // console.log("useeffect loading called")
         }
-        console.log('effect called')
+        // console.log('effect called')
         let access_token_interval = 1000 * 60 * 4
         let interval = setInterval(() => {
-            console.log('interval called')
+            // console.log('interval called')
             if(authTokens){
                 updateToken()
             }
         }, access_token_interval);
         return () => {
-            console.log('cleanup called')
+            // console.log('cleanup called')
             clearInterval(interval);
         }
     },[authTokens,loading])
