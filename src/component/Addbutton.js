@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const Addbutton = ({dropdown_list, add_task, addbutton_submit, showDropdown, handle_hidedropdown, toggle_showdropdown}) => {
+const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, showDropdown, handle_hidedropdown, toggle_showdropdown}) => {
    
     
     const [page_url, setPage_url] = useState("")
+    const [folder, setFolder] = useState("")
+    const [tag, setTag] = useState("")
     
     let menuRef = useRef()
 
@@ -27,7 +29,7 @@ const Addbutton = ({dropdown_list, add_task, addbutton_submit, showDropdown, han
   
     const onSubmit = async (e) => {
         e.preventDefault()
-        await add_task(page_url)
+        await add_task(page_url, folder, tag)
         // wait until the task has been added to clear the "page_url"
         setPage_url("")
     }
@@ -45,14 +47,18 @@ const Addbutton = ({dropdown_list, add_task, addbutton_submit, showDropdown, han
                         <label>URL</label>
                         <input type="text" value={page_url} onChange={(e) => {setPage_url(e.target.value)}} placeholder="enter page url" className={addbutton_submit ? "inactive_input" : ""}/>
                     </div>
-                    {/* <div className="form_control">
-                        <label>Title</label>
-                        <input type="text" placeholder="leave blank for default title"/>
-                    </div> */}
-                    {/* <div className="form_control">
+                    <div className="form_control">
                         <label>Folder</label>
-                        <input list="folders" name="folders" />
-                    </div> */}
+                        <select onChange={(e) => {setFolder(e.target.value)}}>
+                            {folders.map(folder => <option value={folder.name}>{folder.name}</option>)}
+                        </select>
+                    </div>
+                    <div className="form_control">
+                        <label>Tag</label>
+                        <select onChange={(e) => {setTag(e.target.value)}}>
+                            {tags.map(tag => <option value={tag.name}>{tag.name}</option>)}
+                        </select>
+                    </div>
                     
                     <input type="submit" value="Save Bookmark" className={`button_control ${addbutton_submit && 'inactive_button'}`}/>
                 

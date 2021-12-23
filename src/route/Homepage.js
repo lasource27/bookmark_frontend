@@ -64,15 +64,36 @@ const Homepage = () => {
     }, [])
   
     const fetchFolders = async () => {
-      const res = await fetch('http://127.0.0.1:8000/backend/folder-list')
+      const res = await fetch('http://127.0.0.1:8000/backend/folder-list',{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
       const data = await res.json()
-      return data
+      if (res.status === 200){
+        return data
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+
     }
   
     const fetchTags = async () => {
-      const res = await fetch('http://127.0.0.1:8000/backend/tag-list')
+      const res = await fetch('http://127.0.0.1:8000/backend/tag-list',{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
       const data = await res.json()
-      return data
+      if (res.status === 200){
+        return data
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
     }
   
     const fetchBookmarks = async () => {
@@ -156,7 +177,7 @@ const Homepage = () => {
       
     }
   
-    const add_task = async (page_url) => {
+    const add_task = async (page_url,folder,tag) => {
         // fetch(`http://127.0.0.1:8000/backend/bookmark-create/?page_url=${page_url}`, {
         //     method: 'POST',
         //     headers: {
@@ -167,24 +188,32 @@ const Homepage = () => {
         // })
         setAddbutton_submit(true)
         setLoader(true)
+
         const res = await fetch('http://127.0.0.1:8000/backend/bookmark-create/', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
             },
-            body: JSON.stringify(page_url)
+            body: JSON.stringify({'page_url':page_url,'folder':folder,'tag':tag})
         })
        
   
         const data = await res.json()
         
-        console.log(data)
+        console.log(data,res.status)
+
+        if (res.status === 200){
+          const bookmarks = await fetchBookmarks()
+          setBookmarks(bookmarks)
+          setAddbutton_submit(false)
+          setLoader(false)
+          setShowDropdown(false)
+        }else if(res.statusText === 'Unauthorized'){
+          logoutUser()
+        }
   
-        const bookmarks = await fetchBookmarks()
-        setBookmarks(bookmarks)
-        setAddbutton_submit(false)
-        setLoader(false)
-        setShowDropdown(false)
+        
         
         
     }
@@ -272,7 +301,7 @@ const Homepage = () => {
                 <div className="function_bar">
                     <Searchbar search_bookmark={search_bookmark} />
                     <div className="function_button">
-                        <Addbutton add_task={add_task} addbutton_submit={addbutton_submit} showDropdown={showDropdown} toggle_showdropdown={toggle_showdropdown} handle_hidedropdown={handle_hidedropdown}/>
+                        <Addbutton folders={folders} tags={tags} add_task={add_task} addbutton_submit={addbutton_submit} showDropdown={showDropdown} toggle_showdropdown={toggle_showdropdown} handle_hidedropdown={handle_hidedropdown}/>
                         <Sortbutton />
                     </div>
                 </div>
