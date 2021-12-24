@@ -50,13 +50,13 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
                     <div className="form_control">
                         <label>Folder</label>
                         <select onChange={(e) => {setFolder(e.target.value)}}>
-                            {folders.map(folder => <option value={folder.name}>{folder.name}</option>)}
+                            {folders.map(folder => <option value={folder.id}>{folder.name}</option>)}
                         </select>
                     </div>
                     <div className="form_control">
                         <label>Tag</label>
                         <select onChange={(e) => {setTag(e.target.value)}}>
-                            {tags.map(tag => <option value={tag.name}>{tag.name}</option>)}
+                            {tags.map(tag => <option value={tag.id}>{tag.name}</option>)}
                         </select>
                     </div>
                     

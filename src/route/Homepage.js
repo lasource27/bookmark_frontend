@@ -124,29 +124,49 @@ const Homepage = () => {
     }
   
     const folder_bookmark = async (id) => {
-      
-      const res = await fetch(`http://127.0.0.1:8000/backend/folder-detail/${id}`)
+      const res = await fetch(`http://127.0.0.1:8000/backend/folder-detail/${id}`,{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
       const data = await res.json()
-      const all_bookmarks = await fetchBookmarks()
-      setBookmarks(all_bookmarks.filter(bookmark => data.bookmark.includes(bookmark.id)))
-      setTitleBar(data.name)
-      setFolderIcon(true)
-      setTagIcon(false)
-      setAllbookmarkIcon(false)
-      
-      
+      if (res.status === 200){
+        const all_bookmarks = await fetchBookmarks()
+        console.log("all_bookmarks:", all_bookmarks, "data:", data["bookmarks"])
+        setBookmarks(all_bookmarks.filter(bookmark => data["bookmarks"].includes(bookmark.id)))
+        
+        setTitleBar(data["folder_name"])
+        setFolderIcon(true)
+        setTagIcon(false)
+        setAllbookmarkIcon(false)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
     }
   
     const tag_bookmark = async (id) => {
-      const res = await fetch(`http://127.0.0.1:8000/backend/tag-detail/${id}`)
-      const data = await res.json()
-      const all_bookmarks = await fetchBookmarks()
-      setBookmarks(all_bookmarks.filter(bookmark => data.bookmark.includes(bookmark.id)))
-      setTitleBar(data.name)
-      setFolderIcon(false)
-      setTagIcon(true)
-      setAllbookmarkIcon(false)
+      const res = await fetch(`http://127.0.0.1:8000/backend/tag-detail/${id}`,{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
       
+      const data = await res.json()
+      if (res.status === 200){
+        const all_bookmarks = await fetchBookmarks()
+        setBookmarks(all_bookmarks.filter(bookmark => data["bookmarks"].includes(bookmark.id)))
+        setTitleBar(data["tag_name"])
+        setFolderIcon(false)
+        setTagIcon(true)
+        setAllbookmarkIcon(false)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+        
   
     }
   
