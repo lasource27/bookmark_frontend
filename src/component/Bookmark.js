@@ -75,6 +75,16 @@ const Bookmark = ({bookmarks, loader, onDelete}) => {
                                     <p>{bookmark.date_created}</p>
                                 </div>
                             </div>
+                            <div className="folder_and_tag">
+                                <div className="folder_name">
+                                    <FontAwesomeIcon icon="thumbtack" className="icon_footnote"/>
+                                    <p>{bookmark.domain}</p>
+                                </div>
+                                <div className="tag_name">
+                                    <FontAwesomeIcon icon="calendar-day" className="icon_footnote"/>
+                                    <p>{bookmark.date_created}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>    
                 </div>

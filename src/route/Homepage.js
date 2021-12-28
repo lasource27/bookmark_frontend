@@ -180,17 +180,26 @@ const Homepage = () => {
     }
   
     const onDelete = async (id) => {
-      await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`, {
-        method: 'DELETE',
-       })
-      
-      const bookmarksFromServer = async () => {
-        const bookmarks = await fetchBookmarks()
-        setBookmarks(bookmarks)
-      };
-      bookmarksFromServer();
+      const res = await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`,{
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
+
+      if (res.status === 200){
+        const bookmarksFromServer = async () => {
+          const bookmarks = await fetchBookmarks()
+          setBookmarks(bookmarks)
+        };
+        bookmarksFromServer()
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+        
     }
-  
+      
     const search_bookmark = async (search_input) => {
       const all_bookmarks = await fetchBookmarks()
       setBookmarks(all_bookmarks.filter((bookmark) => bookmark.title.toLowerCase().includes(search_input.toLowerCase())))
@@ -231,11 +240,7 @@ const Homepage = () => {
           setShowDropdown(false)
         }else if(res.statusText === 'Unauthorized'){
           logoutUser()
-        }
-  
-        
-        
-        
+        }     
     }
   
       const handle_hidedropdown = () => {
@@ -258,15 +263,16 @@ const Homepage = () => {
                 {/* userheader */}
                 <div className="userHeader">
                     <div className="userName">
-                        <div className="link_control">              
+                        <div className="link_control header_font_size">              
                             <FontAwesomeIcon icon={["fas", "user"]} className="decor_icons"/>
                             <Link to="/login" style={{ textDecoration: 'none', color: "rgb(54, 53, 53)"}}>Hi, {user.username}</Link>
                                         
                         </div>
                     </div>
                     <div className="headerEllipsis">
-                        <div className="link_control">
-                        <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link_icons"/>
+                        <div className="row_name header_font_size" onClick={logoutUser}>
+                          <p>Log Out</p>
+                        {/* <FontAwesomeIcon icon={["fas", "ellipsis-h"]} className="link_icons"/> */}
                         </div>
                     </div>
                 </div>

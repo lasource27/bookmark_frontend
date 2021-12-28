@@ -29,9 +29,18 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
   
     const onSubmit = async (e) => {
         e.preventDefault()
+        console.log("3",folder, tag)
+        if ((folder === "") || (tag === "")){
+            console.log("2",folder, tag)
+            alert("The folder and tag fields are mandatory, please select!")
+        }else{
+            console.log("1",folder, tag)
         await add_task(page_url, folder, tag)
+        
         // wait until the task has been added to clear the "page_url"
         setPage_url("")
+        setFolder("")
+        setTag("")}
     }
 
     
@@ -48,16 +57,20 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
                         <input type="text" value={page_url} onChange={(e) => {setPage_url(e.target.value)}} placeholder="enter page url" className={addbutton_submit ? "inactive_input" : ""}/>
                     </div>
                     <div className="form_control">
-                        <label>Folder</label>
+                        <label>*Folder</label>
                         <select onChange={(e) => {setFolder(e.target.value)}}>
-                            {folders.map(folder => <option value={folder.id}>{folder.name}</option>)}
+                            <option value="0" disabled selected hidden>Please select folder</option>
+                            {folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)}
                         </select>
                     </div>
                     <div className="form_control">
-                        <label>Tag</label>
+                        <label>*Tag</label>
+                        
                         <select onChange={(e) => {setTag(e.target.value)}}>
-                            {tags.map(tag => <option value={tag.id}>{tag.name}</option>)}
+                            <option value="" disabled selected hidden>Please select tag</option>
+                            {tags.map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
                         </select>
+                        
                     </div>
                     
                     <input type="submit" value="Save Bookmark" className={`button_control ${addbutton_submit && 'inactive_button'}`}/>
