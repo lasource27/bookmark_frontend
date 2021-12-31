@@ -1,12 +1,21 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react/cjs/react.development'
 
 
 
 
-const Bookmark = ({bookmarks, loader, onDelete}) => {
+const Bookmark = ({bookmarks, loader, onDelete, folders, tags, folder_bookmark}) => {
     const reversed_bookmarks = [...bookmarks].reverse()
     
+    const rFolders = Object.assign({}, ...(folders.map(item => ({ [item.id]: item.name }) )))
+    const rTags = Object.assign({}, ...(tags.map(item => ({ [item.id]: item.name }) )))
+
+    // const fetchBookmark = async(each) => {
+    //     console.log("clicked")
+    //     await folder_bookmark(each)
+    // }
+
     return (
         <>
             {loader ? 
@@ -48,6 +57,7 @@ const Bookmark = ({bookmarks, loader, onDelete}) => {
                             <div className="hover_icons" onClick={() => onDelete(bookmark.id)}>
                                 <FontAwesomeIcon icon="trash-alt" />
                             </div>
+                            <a onClick={()=>console.log("a")}>a</a>
                         </div>
                     </div>
                     <div className="normal_card">
@@ -75,14 +85,13 @@ const Bookmark = ({bookmarks, loader, onDelete}) => {
                                     <p>{bookmark.date_created}</p>
                                 </div>
                             </div>
+                            
                             <div className="folder_and_tag">
                                 <div className="folder_name">
-                                    <FontAwesomeIcon icon="thumbtack" className="icon_footnote"/>
-                                    <p>{bookmark.domain}</p>
+                                    {bookmark.folder.map(each => <a className="folder_footnote" onClick={() => console.log("clicked")}>#{rFolders[each]}</a>)}                            
                                 </div>
                                 <div className="tag_name">
-                                    <FontAwesomeIcon icon="calendar-day" className="icon_footnote"/>
-                                    <p>{bookmark.date_created}</p>
+                                    {bookmark.tag.map(each => <span>#{rTags[each]}  </span>)}                        
                                 </div>
                             </div>
                         </div>

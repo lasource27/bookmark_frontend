@@ -7,7 +7,7 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
     
     const [page_url, setPage_url] = useState("")
     const [folder, setFolder] = useState("")
-    const [tag, setTag] = useState("")
+    const [tag, setTag] = useState("[]")
     
     let menuRef = useRef()
 
@@ -66,7 +66,7 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
                     <div className="form_control">
                         <label>*Tag</label>
                         
-                        <select onChange={(e) => {setTag(e.target.value)}}>
+                        <select onChange={(e) =>  {setTag(Array.from(e.target.selectedOptions, option => option.value))}} multiple>
                             <option value="" disabled selected hidden>Please select tag</option>
                             {tags.map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
                         </select>

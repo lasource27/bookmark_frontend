@@ -235,10 +235,15 @@ form {
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   opacity: 0;
   height: 100%;
+  z-index: 100
+
+  
 }
 
 .hover_card:hover {
   opacity: 1;
+  
+  
 }
 
 .hover_content {
@@ -603,4 +608,16 @@ form {
   align-items: center;
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+.folder_footnote {
+  color: blue;
+  cursor: pointer;
+  z-index: 10000
+}
+
+
+.folder_footnote:hover {
+  text-decoration: underline;
+ 
 }

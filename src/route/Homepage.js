@@ -337,7 +337,7 @@ const Homepage = () => {
                         {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
                     </div>
                     <div className="bookmark_area">
-                        <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete}/>
+                        <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete} folders={folders} tags={tags} folder_bookmark={folder_bookmark}/>
                     </div>
                 </div>
             </section>
