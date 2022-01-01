@@ -32,6 +32,7 @@ const Homepage = () => {
     const [allbookmarkIcon, setAllbookmarkIcon] = useState(true)
     const [loader, setLoader] = useState(false)
     const [addbutton_submit, setAddbutton_submit] = useState(false)
+    const [filtered_tag_bookmarks, setFiltered_tag_bookmarks] = useState([])
   
     const [showDropdown, setShowDropdown] = useState(false)
     
@@ -58,6 +59,7 @@ const Homepage = () => {
       const bookmarksFromServer = async () => {
         const bookmarks = await fetchBookmarks()
         setBookmarks(bookmarks)
+        setFiltered_tag_bookmarks(bookmarks)
       };
       bookmarksFromServer();
       
@@ -173,6 +175,7 @@ const Homepage = () => {
     const show_all_bookmarks = async () => {
       const bookmarks = await fetchBookmarks()
       setBookmarks(bookmarks)
+      setFiltered_tag_bookmarks(bookmarks)
       setTitleBar('All Bookmarks')
       setFolderIcon(false)
       setTagIcon(false)
@@ -206,6 +209,31 @@ const Homepage = () => {
       
     }
   
+
+    const tag_filter = async(id) => {
+      const res = await fetch(`http://127.0.0.1:8000/backend/tag-detail/${id}`,{
+        method:'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
+      
+      const data = await res.json()
+      if (res.status === 200){
+        
+        setBookmarks(filtered_tag_bookmarks.filter(bookmark => data["bookmarks"].includes(bookmark.id)))
+        setFiltered_tag_bookmarks(filtered_tag_bookmarks.filter(bookmark => data["bookmarks"].includes(bookmark.id)))
+        // setTitleBar(data["tag_name"])
+        // setFolderIcon(false)
+        // setTagIcon(true)
+        // setAllbookmarkIcon(false)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+
+    }
+
     const add_task = async (page_url,folder,tag) => {
         // fetch(`http://127.0.0.1:8000/backend/bookmark-create/?page_url=${page_url}`, {
         //     method: 'POST',
@@ -300,7 +328,7 @@ const Homepage = () => {
                             </div>
                         </div>
                     </div>
-                    {showFolders ? <Folder folders={folders} folder_bookmark={folder_bookmark}/> : ""}
+                    {showFolders ? <Folder folders={folders} folder_bookmark={folder_bookmark} tag_bookmark={tag_bookmark}/> : ""}
                 </div>
                 {/* tags */}
                 <div className="tags">
@@ -337,7 +365,7 @@ const Homepage = () => {
                         {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
                     </div>
                     <div className="bookmark_area">
-                        <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete} folders={folders} tags={tags} folder_bookmark={folder_bookmark}/>
+                        <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete} tags={tags} tag_filter={tag_filter}/>
                     </div>
                 </div>
             </section>

@@ -102,6 +102,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  font-weight: 600;
 }
 
 .userName {
@@ -212,7 +213,7 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-	background-color: #fff;
+	background-color: white;
 	border-radius: 10px;
 	box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 	padding: 10px;
@@ -222,8 +223,22 @@ form {
   
 }
 
-.hover_card {
-  display:flex;
+.normal_card:hover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+	background-color:rgba(192,192,192,0.3);
+	border-radius: 10px;
+	box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+	padding: 10px;
+  min-height: 340px;
+
+  height: 100%;
+  /* filter: brightness(90%) */
+
+
+
+  /* display:flex;
   justify-content: center;
   background-color:rgba(192,192,192,0.3);
   min-height: 340px;
@@ -233,26 +248,26 @@ form {
   left: 0;
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  opacity: 0;
+  opacity: 1;
   height: 100%;
-  z-index: 100
+  z-index: 100 */
 
   
 }
 
-.hover_card:hover {
+/* .hover_card:hover {
   opacity: 1;
   
   
-}
+} */
 
-.hover_content {
+/* .hover_content {
   display: flex;
   font-size: 1.5rem;
   position: absolute;
   top: 23%;
   
-}
+} */
 
 .preview_image img { 
   width: 100%;
@@ -341,9 +356,8 @@ form {
 }
 
 .hover_icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: none;
+  
   height: 30px;
   width: 40px;
   margin: 7px;
@@ -353,10 +367,31 @@ form {
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
-
-  
-
+  position: absolute;
 }
+
+.normal_card:hover .hover_icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.left {
+  top: 5%;
+  right: 35%
+}
+
+.middle {
+  top: 5%;
+  right: 20%
+}
+
+.right {
+  top: 5%;
+  right: 5%
+}
+
 
 .title_bar {
   display: flex;
@@ -443,12 +478,11 @@ form {
   border-radius: 0.25rem;
   list-style: none;
 
-  background-color: 0;
   background-color: white;
   font-size: 0.8rem;
   padding: 7px;
 
-  opacity: 0;
+  display: none;
 
   z-index: 1000;
 }
@@ -458,7 +492,7 @@ form {
 }
 
 .searchbar_input:focus + .dropdown_list {
-  opacity: 1;
+  display: block;
 }
 
 .function_button {
@@ -610,14 +644,19 @@ form {
   cursor: pointer;
 }
 
-.folder_footnote {
-  color: blue;
-  cursor: pointer;
-  z-index: 10000
-}
 
-
-.folder_footnote:hover {
+.tag_name_element:hover {
   text-decoration: underline;
  
+}
+
+.tag_name {
+  margin-top: 5px;  
+  cursor: pointer;
+  color: rgba(0,97,224,255);
+  font-weight: 500;
+}
+
+.tag_name_element {
+  margin-right: 8px;
 }
