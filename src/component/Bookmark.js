@@ -5,7 +5,7 @@ import { useState } from 'react/cjs/react.development'
 
 
 
-const Bookmark = ({bookmarks, loader, onDelete, tags, tag_filter}) => {
+const Bookmark = ({bookmarks, loader, onDeletebookmark, tags, tag_filter}) => {
     const reversed_bookmarks = [...bookmarks].reverse()
     
     const rTags = Object.assign({}, ...(tags.map(item => ({ [item.id]: item.name }) )))
@@ -83,7 +83,7 @@ const Bookmark = ({bookmarks, loader, onDelete, tags, tag_filter}) => {
                         <div className="hover_icons middle">
                             <FontAwesomeIcon icon="pencil-alt" />
                         </div>
-                        <div className="hover_icons right" onClick={() => onDelete(bookmark.id)}>
+                        <div className="hover_icons right" onClick={() => onDeletebookmark(bookmark.id)}>
                             <FontAwesomeIcon icon="trash-alt" />
                         </div>
                     </div>    

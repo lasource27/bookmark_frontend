@@ -9,7 +9,7 @@ import Addbutton from "../component/Addbutton"
 import Sortbutton from "../component/Sortbutton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons'
 import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
 // import { useContext } from 'react/cjs/react.development'
 import AuthContext from '../context/AuthContext'
@@ -17,7 +17,7 @@ import AuthContext from '../context/AuthContext'
 
 
 
-library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar)
+library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash)
 
 
 const Homepage = () => {
@@ -33,6 +33,7 @@ const Homepage = () => {
     const [loader, setLoader] = useState(false)
     const [addbutton_submit, setAddbutton_submit] = useState(false)
     const [filtered_tag_bookmarks, setFiltered_tag_bookmarks] = useState([])
+    const [show_new_tag, setShow_new_tag] = useState(false)
   
     const [showDropdown, setShowDropdown] = useState(false)
     
@@ -182,7 +183,7 @@ const Homepage = () => {
       setAllbookmarkIcon(true)
     }
   
-    const onDelete = async (id) => {
+    const onDeletebookmark = async (id) => {
       const res = await fetch(`http://127.0.0.1:8000/backend/bookmark-delete/${id}`,{
         method:'DELETE',
         headers: {
@@ -271,18 +272,65 @@ const Homepage = () => {
         }     
     }
   
-      const handle_hidedropdown = () => {
-        setShowDropdown(false)
+
+    const create_tag_toggle = () => {
+      setShow_new_tag(!show_new_tag)
+    }
+
+    const create_tag = async(new_tag) => {
+      console.log("create tag")
+      setShow_new_tag(false)
+
+      const res = await fetch('http://127.0.0.1:8000/backend/tag-create/', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + String(authTokens.access)
+        },
+        body: JSON.stringify({'name':new_tag})
+      })
+   
+
+      const data = await res.json()
+  
+      if (res.status === 200){
+        const tags = await fetchTags()
+        setTags(tags)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
+    }
+
+    const onDeletetag = async (id) => {
+      const res = await fetch(`http://127.0.0.1:8000/backend/tag-delete/${id}`,{
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
+
+      if (res.status === 200){
+        const tags = await fetchTags()
+        setTags(tags)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
       }
+        
+    }
+
+    const handle_hidedropdown = () => {
+      setShowDropdown(false)
+    }
       
   
-      const  toggle_showdropdown = () => {
-        
-        setShowDropdown(!showDropdown)
-        // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
-      }
-       
+    const  toggle_showdropdown = () => {
       
+      setShowDropdown(!showDropdown)
+      // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
+    }
+       
+    
   
     return (
         <div className="container">
@@ -315,15 +363,15 @@ const Homepage = () => {
                 </div>
                 {/* folders */}
                 <div className="folders">
-                    <div className="row_wrap" onClick={folderToggle}>
+                    <div className="row_wrap" >
                         <div className="row_control">
-                            <div className="row_name">
+                            <div className="row_name" onClick={folderToggle}>
                                 {showFolders ? <FontAwesomeIcon icon={["fas", "folder-open"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "folder"]} className="decor_icons"/>}
                                 <h5>Folders</h5>
                             </div>
-                            <div className="icon_right">
+                            <div className="icon_right" >
                                 <div className="link_control">
-                                    {showFolders ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link_icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/>}
+                                    {showFolders ? <FontAwesomeIcon icon={["fas", "plus"]} className="link_icons" /> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/> }
                                 </div>
                             </div>
                         </div>
@@ -332,20 +380,20 @@ const Homepage = () => {
                 </div>
                 {/* tags */}
                 <div className="tags">
-                    <div className="row_wrap" onClick={tagToggle}>
+                    <div className="row_wrap">
                         <div className="row_control">
-                            <div className="row_name">
+                            <div className="row_name" onClick={tagToggle}>
                                 {showTags ? <FontAwesomeIcon icon={["fas", "user-tag"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "tags"]} className="decor_icons"/>}
                                 <h5>Tags</h5>
                             </div>
-                            <div className="icon_right">
+                            <div className="icon_right" onClick={create_tag_toggle}>
                                 <div className="link_control">
-                                    {showTags ? <FontAwesomeIcon icon={["fas", "angle-double-up"]} className="link_icons"/> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/>}
+                                    {showTags ? <FontAwesomeIcon icon={["fas", "plus"]} className="link_icons" /> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/>}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {showTags ? <Tag tags={tags} tag_bookmark={tag_bookmark}/> : ""}
+                    {showTags ? <Tag tags={tags} tag_bookmark={tag_bookmark} create_tag={create_tag} show_new_tag={show_new_tag} /> : ""}
                 </div>        
             </section>
 
@@ -365,7 +413,7 @@ const Homepage = () => {
                         {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
                     </div>
                     <div className="bookmark_area">
-                        <Bookmark bookmarks={bookmarks} loader={loader} onDelete={onDelete} tags={tags} tag_filter={tag_filter}/>
+                        <Bookmark bookmarks={bookmarks} loader={loader} onDeletebookmark={onDeletebookmark} tags={tags} tag_filter={tag_filter}/>
                     </div>
                 </div>
             </section>
