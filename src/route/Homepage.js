@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
 import Folder from '../component/Folder'
-import Tag from '../component/Tag'
+import Tags from '../component/Tags'
 import Bookmark from '../component/Bookmark'
 import Searchbar from "../component/Searchbar"
 import Addbutton from "../component/Addbutton"
@@ -393,7 +393,7 @@ const Homepage = () => {
                             </div>
                         </div>
                     </div>
-                    {showTags ? <Tag tags={tags} tag_bookmark={tag_bookmark} create_tag={create_tag} show_new_tag={show_new_tag} /> : ""}
+                    {showTags ? <Tags tags={tags} tag_bookmark={tag_bookmark} create_tag={create_tag} show_new_tag={show_new_tag} /> : ""}
                 </div>        
             </section>
 

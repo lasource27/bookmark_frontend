@@ -67,6 +67,7 @@ input:focus {
 
 .all_bookmarks:hover,
 .row_wrap:hover, 
+.row_control:hover,
 .userName:hover,
 .headerEllipsis:hover{
   background-color: #e6e6e6;
@@ -141,10 +142,13 @@ form {
 }
 
 .tags {
-  
+ 
   cursor: pointer;
 }
 
+.tags .row_control {
+  position: relative;
+}
 
 .showcase {
   display: flex;
@@ -672,3 +676,27 @@ form {
   border: 1px solid grey;
 }
 
+.tagDropdown {
+  position: absolute;
+  right: 20px;
+  top: 90%;
+  font-size: 0.9rem;
+  background-color: white;
+  z-index: 100000;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
+.tagDropdown ul {
+  list-style: none;
+}
+
+.tagDropdown ul li:hover {
+  background-color: rgba(0,97,224,255);
+  color: white
+}
+
+.tagDropdown ul li {
+  padding: 3px;
+  border-radius: 3px;
+}
