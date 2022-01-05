@@ -12,7 +12,7 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
     let menuRef = useRef()
 
     const refListener = (event) => {
-        console.log(showDropdown,"event handler called")
+        
         if (!menuRef.current.contains(event.target)) {
             handle_hidedropdown()
         }
@@ -29,12 +29,9 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
   
     const onSubmit = async (e) => {
         e.preventDefault()
-        console.log("3",folder, tag)
         if ((folder === "") || (tag === "")){
-            console.log("2",folder, tag)
             alert("The folder and tag fields are mandatory, please select!")
         }else{
-            console.log("1",folder, tag)
         await add_task(page_url, folder, tag)
         
         // wait until the task has been added to clear the "page_url"

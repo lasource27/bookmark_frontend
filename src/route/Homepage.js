@@ -301,6 +301,31 @@ const Homepage = () => {
       }     
     }
 
+    const update_tag = async (id, tag_name) => {
+      console.log("update tag")
+      setShow_new_tag(false)
+
+      const res = await fetch(`http://127.0.0.1:8000/backend/tag-update/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + String(authTokens.access)
+        },
+        body: JSON.stringify({'name':tag_name})
+      })
+   
+
+      const data = await res.json()
+      console.log(data)
+  
+      if (res.status === 200){
+        const tags = await fetchTags()
+        setTags(tags)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
+    }
+
     const onDeletetag = async (id) => {
       const res = await fetch(`http://127.0.0.1:8000/backend/tag-delete/${id}`,{
         method:'DELETE',
@@ -393,7 +418,7 @@ const Homepage = () => {
                             </div>
                         </div>
                     </div>
-                    {showTags ? <Tags tags={tags} tag_bookmark={tag_bookmark} create_tag={create_tag} show_new_tag={show_new_tag} /> : ""}
+                    {showTags ? <Tags tags={tags} tag_bookmark={tag_bookmark} create_tag={create_tag} show_new_tag={show_new_tag} update_tag={update_tag} onDeletetag={onDeletetag}/> : ""}
                 </div>        
             </section>
 

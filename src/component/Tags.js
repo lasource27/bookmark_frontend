@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tag from './Tag'
 import { useState } from 'react/cjs/react.development'
 
-const Tags = ({tags, tag_bookmark, create_tag, show_new_tag}) => {
+const Tags = ({tags, tag_bookmark, create_tag, show_new_tag, update_tag, onDeletetag}) => {
 
     const [new_tag, setNew_tag] = useState("")
  
@@ -15,7 +15,7 @@ const Tags = ({tags, tag_bookmark, create_tag, show_new_tag}) => {
         <div className="tags">
             <ul>
                 {tags.map((tag) => (
-                    <Tag key={tag.id} tag={tag} tag_bookmark={tag_bookmark}/>
+                    <Tag key={tag.id} tag={tag} tag_bookmark={tag_bookmark} update_tag={update_tag} onDeletetag={onDeletetag}/>
                 ))}
                 
                 {show_new_tag ? 
