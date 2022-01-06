@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
 import Folders from '../component/Folders'
 import Tags from '../component/Tags'
-import Bookmark from '../component/Bookmark'
+import Bookmarks from '../component/Bookmarks'
 import Searchbar from "../component/Searchbar"
 import Addbutton from "../component/Addbutton"
 import Sortbutton from "../component/Sortbutton"
@@ -35,6 +35,7 @@ const Homepage = () => {
     const [filtered_tag_bookmarks, setFiltered_tag_bookmarks] = useState([])
     const [show_new_tag, setShow_new_tag] = useState(false)
     const [show_new_folder, setShow_new_folder] = useState(false)
+    const [edit_bookmark_toggle, setEdit_bookmark_toggle] = useState(false)
   
     const [showDropdown, setShowDropdown] = useState(false)
     
@@ -427,7 +428,10 @@ const Homepage = () => {
       // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
     }
        
-    
+    const edit_bookmark = () => {
+      setEdit_bookmark_toggle(!edit_bookmark_toggle)
+      console.log("edit bookmark")
+    }
   
     return (
         <div className="container">
@@ -495,25 +499,33 @@ const Homepage = () => {
             </section>
 
             {/* ---SHOWCASE--- */}
-            <section className="showcase">
-                {/* functionbar */}
-                <div className="function_bar">
-                    <Searchbar search_bookmark={search_bookmark} />
-                    <div className="function_button">
-                        <Addbutton folders={folders} tags={tags} add_task={add_task} addbutton_submit={addbutton_submit} showDropdown={showDropdown} toggle_showdropdown={toggle_showdropdown} handle_hidedropdown={handle_hidedropdown}/>
-                        <Sortbutton />
-                    </div>
-                </div>
-                {/* main */}
-                <div className="main">
-                    <div className="title_bar">
-                        {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
-                    </div>
-                    <div className="bookmark_area">
-                        <Bookmark bookmarks={bookmarks} loader={loader} onDeletebookmark={onDeletebookmark} tags={tags} tag_filter={tag_filter}/>
-                    </div>
-                </div>
-            </section>
+            <div className="main_part">
+              <section className="showcase">
+                  {/* functionbar */}
+                  <div className="function_bar">
+                      <Searchbar search_bookmark={search_bookmark} />
+                      <div className="function_button">
+                          <Addbutton folders={folders} tags={tags} add_task={add_task} addbutton_submit={addbutton_submit} showDropdown={showDropdown} toggle_showdropdown={toggle_showdropdown} handle_hidedropdown={handle_hidedropdown}/>
+                          <Sortbutton />
+                      </div>
+                  </div>
+                  {/* main */}
+                  <div className="main">
+                      <div className="title_bar">
+                          {allbookmarkIcon ? <FontAwesomeIcon icon="bookmark" className="decor_icons"/> : folderIcon ? <FontAwesomeIcon icon={["far", "folder"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "hashtag"]} className="decor_icons"/>}<h2>{titleBar}</h2>
+                      </div>
+                      <div className="bookmark_area">
+                          <Bookmarks bookmarks={bookmarks} loader={loader} onDeletebookmark={onDeletebookmark} tags={tags} tag_filter={tag_filter} edit_bookmark={edit_bookmark}/>
+                      </div>
+                  </div>
+              </section>
+              {edit_bookmark_toggle ?
+              <section className="edit_showcase">
+
+              </section>
+              :""
+              }
+            </div>
         </div>
     )
 }

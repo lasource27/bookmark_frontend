@@ -62,6 +62,7 @@ input:focus {
   align-items: center;
   margin: 4px 0px;
   padding: 4px 20px;
+  flex-grow: 1;
 }
 
 
@@ -705,4 +706,14 @@ form {
 .folderDropdown ul li {
   padding: 3px;
   border-radius: 3px;
+}
+
+.main_part {
+  display: flex;
+}
+
+.edit_showcase {
+  width: 60%;
+  height: 100%;
+  border-left: 1px solid lightgrey;
 }
