@@ -38,7 +38,7 @@ const Registerpage = () => {
 
 
     return (
-        <div>
+        <div className="register_page">
             <h1>Register Page</h1>
             <form onSubmit={registerUser}>
                 <div className="form_control">

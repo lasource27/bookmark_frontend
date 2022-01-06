@@ -10,7 +10,7 @@ const Loginpage = () => {
     const {user} = useContext(AuthContext)
     const {loginUser} = useContext(AuthContext)
     return (
-        <div>
+        <div className="login_page">
             <h1>Login Page</h1>
             <form onSubmit={loginUser}>
                 <div className="form_control">

@@ -146,7 +146,8 @@ form {
   cursor: pointer;
 }
 
-.tags .row_control {
+.tags .row_control,
+.folders .row_control {
   position: relative;
 }
 
@@ -533,7 +534,9 @@ form {
   z-index: 1000;
 }
 
-.addbutton form {
+.addbutton form,
+.login_page form,
+.register_page form {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -547,7 +550,6 @@ form {
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   border-radius: 0.25rem;
 }
-
 
 .addbutton .link_icons {
   color: white
@@ -676,7 +678,8 @@ form {
   border: 1px solid grey;
 }
 
-.tagDropdown {
+.tagDropdown,
+.folderDropdown {
   position: absolute;
   right: 20px;
   top: 90%;
@@ -687,16 +690,19 @@ form {
   border-radius: 5px;
 }
 
-.tagDropdown ul {
+.tagDropdown ul,
+.folderDropdown ul {
   list-style: none;
 }
 
-.tagDropdown ul li:hover {
+.tagDropdown ul li:hover,
+.folderDropdown ul li:hover {
   background-color: rgba(0,97,224,255);
   color: white
 }
 
-.tagDropdown ul li {
+.tagDropdown ul li,
+.folderDropdown ul li {
   padding: 3px;
   border-radius: 3px;
 }

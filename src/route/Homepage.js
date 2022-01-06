@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
-import Folder from '../component/Folder'
+import Folders from '../component/Folders'
 import Tags from '../component/Tags'
 import Bookmark from '../component/Bookmark'
 import Searchbar from "../component/Searchbar"
@@ -34,6 +34,7 @@ const Homepage = () => {
     const [addbutton_submit, setAddbutton_submit] = useState(false)
     const [filtered_tag_bookmarks, setFiltered_tag_bookmarks] = useState([])
     const [show_new_tag, setShow_new_tag] = useState(false)
+    const [show_new_folder, setShow_new_folder] = useState(false)
   
     const [showDropdown, setShowDropdown] = useState(false)
     
@@ -277,6 +278,10 @@ const Homepage = () => {
       setShow_new_tag(!show_new_tag)
     }
 
+    const create_folder_toggle = () => {
+      setShow_new_folder(!show_new_folder)
+    }
+
     const create_tag = async(new_tag) => {
       console.log("create tag")
       setShow_new_tag(false)
@@ -296,6 +301,30 @@ const Homepage = () => {
       if (res.status === 200){
         const tags = await fetchTags()
         setTags(tags)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
+    }
+
+    const create_folder = async(new_folder) => {
+     
+      setShow_new_folder(false)
+
+      const res = await fetch('http://127.0.0.1:8000/backend/folder-create/', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + String(authTokens.access)
+        },
+        body: JSON.stringify({'name':new_folder})
+      })
+   
+
+      const data = await res.json()
+  
+      if (res.status === 200){
+        const folders = await fetchFolders()
+        setFolders(folders)
       }else if(res.statusText === 'Unauthorized'){
         logoutUser()
       }     
@@ -326,6 +355,31 @@ const Homepage = () => {
       }     
     }
 
+    const update_folder = async (id, folder_name) => {
+      console.log("update folder")
+      setShow_new_folder(false)
+
+      const res = await fetch(`http://127.0.0.1:8000/backend/folder-update/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + String(authTokens.access)
+        },
+        body: JSON.stringify({'name':folder_name})
+      })
+   
+
+      const data = await res.json()
+      console.log(data)
+  
+      if (res.status === 200){
+        const folders = await fetchFolders()
+        setFolders(folders)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
+    }
+
     const onDeletetag = async (id) => {
       const res = await fetch(`http://127.0.0.1:8000/backend/tag-delete/${id}`,{
         method:'DELETE',
@@ -338,6 +392,24 @@ const Homepage = () => {
       if (res.status === 200){
         const tags = await fetchTags()
         setTags(tags)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }
+        
+    }
+
+    const onDeletefolder = async (id) => {
+      const res = await fetch(`http://127.0.0.1:8000/backend/folder-delete/${id}`,{
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(authTokens.access)
+        }
+      })
+
+      if (res.status === 200){
+        const folders = await fetchFolders()
+        setFolders(folders)
       }else if(res.statusText === 'Unauthorized'){
         logoutUser()
       }
@@ -394,14 +466,14 @@ const Homepage = () => {
                                 {showFolders ? <FontAwesomeIcon icon={["fas", "folder-open"]} className="decor_icons"/> : <FontAwesomeIcon icon={["fas", "folder"]} className="decor_icons"/>}
                                 <h5>Folders</h5>
                             </div>
-                            <div className="icon_right" >
+                            <div className="icon_right" onClick={create_folder_toggle}>
                                 <div className="link_control">
                                     {showFolders ? <FontAwesomeIcon icon={["fas", "plus"]} className="link_icons" /> : <FontAwesomeIcon icon={["fas", "angle-double-down"]} className="link_icons"/> }
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {showFolders ? <Folder folders={folders} folder_bookmark={folder_bookmark} tag_bookmark={tag_bookmark}/> : ""}
+                    {showFolders ? <Folders folders={folders} folder_bookmark={folder_bookmark} create_folder={create_folder} show_new_folder={show_new_folder} update_folder={update_folder} onDeletefolder={onDeletefolder}/> : ""}
                 </div>
                 {/* tags */}
                 <div className="tags">

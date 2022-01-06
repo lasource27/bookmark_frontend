@@ -29,15 +29,13 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
   
     const onSubmit = async (e) => {
         e.preventDefault()
-        if ((folder === "") || (tag === "")){
-            alert("The folder and tag fields are mandatory, please select!")
-        }else{
         await add_task(page_url, folder, tag)
         
         // wait until the task has been added to clear the "page_url"
         setPage_url("")
         setFolder("")
-        setTag("")}
+        setTag("[]") 
+    // }
     }
 
     
@@ -54,14 +52,14 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
                         <input type="text" value={page_url} onChange={(e) => {setPage_url(e.target.value)}} placeholder="enter page url" className={addbutton_submit ? "inactive_input" : ""}/>
                     </div>
                     <div className="form_control">
-                        <label>*Folder</label>
+                        <label>Folder</label>
                         <select onChange={(e) => {setFolder(e.target.value)}}>
                             <option value="0" disabled selected hidden>Please select folder</option>
                             {folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)}
                         </select>
                     </div>
                     <div className="form_control">
-                        <label>*Tag</label>
+                        <label>Tag</label>
                         
                         <select onChange={(e) =>  {setTag(Array.from(e.target.selectedOptions, option => option.value))}} multiple>
                             <option value="" disabled selected hidden>Please select tag</option>
