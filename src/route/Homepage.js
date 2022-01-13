@@ -463,7 +463,7 @@ const Homepage = () => {
 
       setEdit_id(id)
       setBookmark_concerned(bookmark)
-      // console.log(id, bookmark)
+      console.log(id, bookmark_concerned)
      
     }
   
