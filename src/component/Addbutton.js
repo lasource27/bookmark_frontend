@@ -62,7 +62,6 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
                         <label>Tag</label>
                         
                         <select onChange={(e) =>  {setTag(Array.from(e.target.selectedOptions, option => option.value))}} multiple>
-                            <option value="" disabled selected hidden>Please select tag</option>
                             {tags.map(tag => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
                         </select>
                         

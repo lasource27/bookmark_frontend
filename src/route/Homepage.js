@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Folders from '../component/Folders'
 import Tags from '../component/Tags'
 import Bookmarks from '../component/Bookmarks'
+import Editbookmark from '../component/Editbookmark'
 import Searchbar from "../component/Searchbar"
 import Addbutton from "../component/Addbutton"
 import Sortbutton from "../component/Sortbutton"
@@ -36,6 +37,8 @@ const Homepage = () => {
     const [show_new_tag, setShow_new_tag] = useState(false)
     const [show_new_folder, setShow_new_folder] = useState(false)
     const [edit_bookmark_toggle, setEdit_bookmark_toggle] = useState(false)
+    const [edit_id, setEdit_id] = useState("")
+    const [bookmark_concerned, setBookmark_concerned] = useState("")
   
     const [showDropdown, setShowDropdown] = useState(false)
     
@@ -171,8 +174,6 @@ const Homepage = () => {
       }else if(res.statusText === 'Unauthorized'){
         logoutUser()
       }
-        
-  
     }
   
     const show_all_bookmarks = async () => {
@@ -272,6 +273,28 @@ const Homepage = () => {
         }else if(res.statusText === 'Unauthorized'){
           logoutUser()
         }     
+    }
+
+    const update_bookmark = async (bookmark_title,bookmark_description,bookmark_folder,bookmark_tag) => {
+      const res = await fetch(`http://127.0.0.1:8000/backend/bookmark-update/${edit_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access)
+            },
+            body: JSON.stringify({'title':bookmark_title,'description':bookmark_description,'folder':bookmark_folder,'tag':bookmark_tag})
+        })
+        
+      const data = await res.json()
+
+      console.log(res.status)
+      
+      if (res.status === 200){
+        const bookmarks = await fetchBookmarks()
+        setBookmarks(bookmarks)
+      }else if(res.statusText === 'Unauthorized'){
+        logoutUser()
+      }     
     }
   
 
@@ -428,9 +451,20 @@ const Homepage = () => {
       // toggle action is passed up from addbutton component to APP component, and showDropdown state is passed down from APP to addbutton
     }
        
-    const edit_bookmark = () => {
-      setEdit_bookmark_toggle(!edit_bookmark_toggle)
-      console.log("edit bookmark")
+    const edit_bookmark = (id, bookmark) => {
+      if (edit_bookmark_toggle === false) {
+        setEdit_bookmark_toggle(!edit_bookmark_toggle)
+
+      }else if ((edit_bookmark_toggle === true)  && (edit_id === id)) {
+        setEdit_bookmark_toggle(!edit_bookmark_toggle)
+      }else {
+        
+      }
+
+      setEdit_id(id)
+      setBookmark_concerned(bookmark)
+      // console.log(id, bookmark)
+     
     }
   
     return (
@@ -521,7 +555,7 @@ const Homepage = () => {
               </section>
               {edit_bookmark_toggle ?
               <section className="edit_showcase">
-
+                <Editbookmark edit_id={edit_id} bookmark_concerned={bookmark_concerned} update_bookmark={update_bookmark} tags={tags} folders={folders}/>
               </section>
               :""
               }

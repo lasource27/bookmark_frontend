@@ -6,7 +6,7 @@ const Bookmark = ({bookmark,tag_filter,rTags,onDeletebookmark, edit_bookmark}) =
 
 
     const onClick_edit = () => {
-        edit_bookmark()
+        edit_bookmark(bookmark.id, bookmark)
     }
     return (
         <div  className="card">            

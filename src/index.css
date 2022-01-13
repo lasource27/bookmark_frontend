@@ -537,7 +537,7 @@ form {
 
 .addbutton form,
 .login_page form,
-.register_page form {
+.register_page form{
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -710,10 +710,60 @@ form {
 
 .main_part {
   display: flex;
+  width: 100%;
+  /* width: calc(100%-250px); */
+  height: 100%;
+  
 }
 
 .edit_showcase {
-  width: 60%;
+  width: 100%;
   height: 100%;
   border-left: 1px solid lightgrey;
+}
+
+.edit_form {
+  margin: 30px 60px 0px 20px;
+}
+
+.edit_form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+
+  background-color: white;
+  
+  
+}
+
+.edit_form label {
+  margin-left: 20px;
+}
+
+.edit_form select {
+  margin-left: 20px;
+  padding: 5px;
+  width: 100px;
+  height: 30px;
+  overflow: auto;
+  border-radius: 5px;
+}
+
+.edit_form p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.addbutton select {
+  padding: 5px;
+  width: 270px;
+  height: 30px;
+  overflow: auto;
+  border-radius: 5px;
+}
+
+select option {
+  padding: 2px;
 }
