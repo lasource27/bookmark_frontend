@@ -536,7 +536,6 @@ form {
 }
 
 .addbutton form,
-.login_page form,
 .register_page form{
   display: flex;
   flex-direction: column;
@@ -567,7 +566,8 @@ form {
   font-weight: bold;
 }
 
-.form_control input {
+.addbutton .form_control input,
+.edit_form .form_control input {
   width: 100%;
   height: 30px;
   padding: 5px;
@@ -575,7 +575,8 @@ form {
   border: 1px solid grey;
 }
 
-.form_control input:focus {
+.addbutton .form_control input:focus,
+.edit_form .form_control input:focus {
   border: 2px solid rgba(0,97,224,255);
 }
 
@@ -766,4 +767,96 @@ form {
 
 select option {
   padding: 2px;
+}
+
+.login_page {
+  height: 100%;
+  width: 100%;
+  position: relative
+}
+
+.login_image {
+  background-image: url("images/background-login.jpg");
+  background-size: 1920px 940px;
+  width: 100%;
+  height: 100%;
+  filter: blur(30px);
+  -webkit-filter: blur(30px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login_content {
+  z-index: 5;
+  position:absolute;
+  top: 30%;
+  left: 41%;
+}
+
+.login_content_bg {
+  position: relative;
+  border-radius: 20px;
+  background: white;
+  opacity: 0.5;
+  height: 350px;
+  width: 350px;
+}
+
+.login_page form{
+  position: absolute;
+  top: 7%;
+  left: 10%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+
+  height: 350px;
+  width: 300px;
+  padding: 20px 15px; 
+  border-radius: 0.25rem;
+}
+
+.login_content_container {
+  position: relative;
+  height: 500px;
+  width: 300px;
+}
+
+.login_button {
+  margin: 10px 0px;
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  background-color: #00264d;
+}
+
+.login_form .login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.login_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:1rem;
+  padding: 15px;
+  background-color: #00264d;
+  color: white
+}
+
+.login_page input{
+  outline: none;
+  border:none;
+  width: 100%;
+  height: 46px;
+  padding: 5px 10px;
+  background-color: #395173;
 }

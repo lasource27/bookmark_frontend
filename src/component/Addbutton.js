@@ -7,7 +7,7 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
     
     const [page_url, setPage_url] = useState("")
     const [folder, setFolder] = useState("")
-    const [tag, setTag] = useState("[]")
+    const [tag, setTag] = useState([])
     
     let menuRef = useRef()
 
@@ -30,11 +30,12 @@ const Addbutton = ({folders, tags, dropdown_list, add_task, addbutton_submit, sh
     const onSubmit = async (e) => {
         e.preventDefault()
         await add_task(page_url, folder, tag)
+        console.log("folder:",folder, "tag:",tag)
         
         // wait until the task has been added to clear the "page_url"
         setPage_url("")
         setFolder("")
-        setTag("[]") 
+        setTag([]) 
     // }
     }
 

@@ -17,7 +17,7 @@ const Editbookmark = ({edit_id, bookmark_concerned, update_bookmark, tags, folde
 
     const onSubmit = (e) => {
         e.preventDefault()
-        update_bookmark(bookmark_title,bookmark_description,bookmark_folder,bookmark_tag)
+        update_bookmark(bookmark_title,bookmark_description,[bookmark_folder],bookmark_tag)
         console.log(bookmark_concerned.tag)
         console.log(bookmark_concerned.folder)
         console.log(bookmark_folder)
