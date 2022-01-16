@@ -24,4 +24,4 @@ yarn-error.log*
 
 /venv
 
-/images
+/src/images
