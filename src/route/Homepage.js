@@ -10,15 +10,15 @@ import Addbutton from "../component/Addbutton"
 import Sortbutton from "../component/Sortbutton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons'
-import { faFolder as faFolderRegular} from '@fortawesome/free-regular-svg-icons'
+import { faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash, faLock, faEnvelope} from '@fortawesome/free-solid-svg-icons'
+import { faFolder as faFolderRegular, faUser as faUserRegular} from '@fortawesome/free-regular-svg-icons'
 // import { useContext } from 'react/cjs/react.development'
 import AuthContext from '../context/AuthContext'
 
 
 
 
-library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash)
+library.add(faEllipsisH, faBookmark, faFolder, faTags, faUser, faFolderOpen, faAngleDoubleDown, faAngleDoubleUp, faFolderRegular, faHashtag, faUserTag, faThumbtack, faCalendarDay, faPencilAlt, faBookReader, faTrashAlt, faSearch, faStar, faPlus, faTrash, faLock, faEnvelope, faUserRegular)
 
 
 const Homepage = () => {
@@ -259,20 +259,28 @@ const Homepage = () => {
             body: JSON.stringify({'page_url':page_url,'folder':folder,'tag':tag})
         })
        
-  
+      
         const data = await res.json()
         
         console.log(data,res.status)
+        
 
-        if (res.status === 200){
-          const bookmarks = await fetchBookmarks()
+        if (data.error === "error") {
           setBookmarks(bookmarks)
           setAddbutton_submit(false)
           setLoader(false)
           setShowDropdown(false)
-        }else if(res.statusText === 'Unauthorized'){
+          alert("Error when loading the bookmark, please try another one")
+        } else if(res.statusText === 'Unauthorized'){
           logoutUser()
-        }     
+          
+        }else {
+            const bookmarks = await fetchBookmarks()
+            setBookmarks(bookmarks)
+            setAddbutton_submit(false)
+            setLoader(false)
+            setShowDropdown(false)
+        }
     }
 
     const update_bookmark = async (bookmark_title,bookmark_description,bookmark_folder,bookmark_tag) => {
@@ -289,12 +297,15 @@ const Homepage = () => {
 
       console.log(res.status)
       
-      if (res.status === 200){
-        const bookmarks = await fetchBookmarks()
-        setBookmarks(bookmarks)
+      if (data.error === "error") {
+        alert("Bookmark update failed, please try again")
       }else if(res.statusText === 'Unauthorized'){
         logoutUser()
-      }     
+      }else {
+        const bookmarks = await fetchBookmarks()
+        setBookmarks(bookmarks)
+        alert("Bookmark updated")
+      }
     }
   
 
@@ -466,6 +477,10 @@ const Homepage = () => {
       console.log(id, bookmark_concerned)
      
     }
+
+    const close_edit = () => {
+      setEdit_bookmark_toggle(false)
+    }
   
     return (
         <div className="container">
@@ -555,7 +570,7 @@ const Homepage = () => {
               </section>
               {edit_bookmark_toggle ?
               <section className="edit_showcase">
-                <Editbookmark edit_id={edit_id} bookmark_concerned={bookmark_concerned} update_bookmark={update_bookmark} tags={tags} folders={folders}/>
+                <Editbookmark edit_id={edit_id} bookmark_concerned={bookmark_concerned} update_bookmark={update_bookmark} tags={tags} folders={folders} close_edit={close_edit}/>
               </section>
               :""
               }

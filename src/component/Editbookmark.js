@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react/cjs/react.development'
 
-const Editbookmark = ({edit_id, bookmark_concerned, update_bookmark, tags, folders}) => {
+const Editbookmark = ({edit_id, bookmark_concerned, update_bookmark, tags, folders, close_edit}) => {
 
     useEffect(() => {
         setBookmark_title(bookmark_concerned.title);
@@ -17,14 +17,17 @@ const Editbookmark = ({edit_id, bookmark_concerned, update_bookmark, tags, folde
 
     const onSubmit = (e) => {
         e.preventDefault()
-        update_bookmark(bookmark_title,bookmark_description,[bookmark_folder],bookmark_tag)
+        update_bookmark(bookmark_title,bookmark_description,bookmark_folder,bookmark_tag)
         console.log(bookmark_concerned.tag)
         console.log(bookmark_concerned.folder)
         console.log(bookmark_folder)
     }
+
+   
    
     return (
         <div className="edit_form">
+            <div className="xmark" onClick={close_edit}>✕</div>
             <p>- Edit Bookmark -</p>
             <form className="row_name_sub" onSubmit={onSubmit}>
                 <div className="form_control">

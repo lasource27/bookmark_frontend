@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Poppins:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Work+Sans:wght@300&display=swap');
+
+
 
 * {
   box-sizing: border-box;
@@ -535,8 +538,7 @@ form {
   z-index: 1000;
 }
 
-.addbutton form,
-.register_page form{
+.addbutton form{
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -769,33 +771,34 @@ select option {
   padding: 2px;
 }
 
-.login_page {
+.identity_page {
   height: 100%;
   width: 100%;
   position: relative
 }
 
-.login_image {
-  background-image: url("images/background-login.jpg");
-  background-size: 1920px 940px;
+
+.identity_image {
+  background-image: url("images/background-login5.jpg");
+  background-size: 1920px 1000px;
   width: 100%;
   height: 100%;
-  filter: blur(30px);
-  -webkit-filter: blur(30px);
+  filter: blur(0px);
+  -webkit-filter: blur(1px);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  /* background-size: cover; */
 }
 
-.login_content {
+.identity_content {
   z-index: 5;
   position:absolute;
   top: 30%;
   left: 41%;
 }
 
-.login_content_bg {
-  position: relative;
+.identity_content_bg {
+  
   border-radius: 20px;
   background: white;
   opacity: 0.5;
@@ -803,9 +806,25 @@ select option {
   width: 350px;
 }
 
-.login_page form{
+
+.register_page .identity_content_bg {
+  height: 400px;
+}
+
+.registerSuccess_bg {
   position: absolute;
-  top: 7%;
+  left:-10%;
+  top: 100%;
+  border-radius: 20px;
+  background: white;
+  opacity: 0.5;
+  height: 70px;
+  width: 350px;
+}
+
+.identity_page form {
+  position: absolute;
+  top: 15%;
   left: 10%;
   display: flex;
   flex-direction: column;
@@ -818,45 +837,108 @@ select option {
   border-radius: 0.25rem;
 }
 
-.login_content_container {
-  position: relative;
+
+.identity_content_container {
+ 
   height: 500px;
   width: 300px;
 }
 
-.login_button {
-  margin: 10px 0px;
-  width: 200px;
-  height: 30px;
+.identity_button {
+  margin: 10px;
+  width: 275px;
+  height: 40px;
   border: none;
-  border-radius: 20px;
-  color: white;
-  background-color: #00264d;
+  border-radius: 5px;
+  color: #e5e9f2;
+  background-color: #3e3b42;
+  
+  padding: 10px
 }
 
-.login_form .login {
+.identity_form .identity {
   display: flex;
   justify-content: center;
   align-items: center;
-
-
+  margin-top: 8px
 }
 
-.login_icon {
+.identity_form .first {
+  margin-top: 10px
+}
+
+.identity_icon {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size:1rem;
   padding: 15px;
-  background-color: #00264d;
-  color: white
+  background-color: #3e3b42;
+  color: #f0f0f0;
 }
 
-.login_page input{
+
+.identity_page input[type="text"],
+.identity_page input[type="password"]{
   outline: none;
   border:none;
   width: 100%;
   height: 46px;
   padding: 5px 10px;
-  background-color: #395173;
+  background-color: #f0f0f0;
+  color: #00264d;
+  font-size:1rem;
+  font-family: "Work Sans", sans-serif;
+}
+
+.identity_page input[type="text"]:focus,
+.identity_page input[type="password"]:focus {
+  background-color: #f0f0f0;
+  color: #00264d
+}
+
+
+.identity_page input[type="text"]:-webkit-autofill,
+.identity_page input[type="password"]:-webkit-autofill {
+  -webkit-box-shadow:0 0 0 50px #c9c7c7 inset; 
+  -webkit-text-fill-color: #434344; 
+  
+ } 
+
+.identity_page input[type="submit" i]:-webkit-autofill,
+.identity_page input[type="submit" i]:-webkit-autofill:hover,
+.identity_page input[type="submit" i]:-webkit-autofill:focus,
+.identity_page input[type="submit" i]:-webkit-autofill:active
+
+{
+  background-color: none !important;
+}
+
+.identity_page input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #b1b2b4;
+  opacity: 1; /* Firefox */
+}
+
+.profile {
+  position: absolute;
+  top:-45%;
+  left: 24%;
+  color: #e2e0e0;
+  font-size: 5rem;
+  background-color: #3e3b42;
+  padding: 20px 40px;
+  border-radius: 500rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.xmark {
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-align: right;
+}
+
+.registerSuccess_content {
+  position: absolute;
+  left:0%;
+  top: 102%;
 }
