@@ -885,7 +885,7 @@ select option {
   width: 100%;
   height: 46px;
   padding: 5px 10px;
-  background-color: #f0f0f0;
+  background-color: #c9c7c7;
   color: #00264d;
   font-size:1rem;
   font-family: "Work Sans", sans-serif;
@@ -905,14 +905,7 @@ select option {
   
  } 
 
-.identity_page input[type="submit" i]:-webkit-autofill,
-.identity_page input[type="submit" i]:-webkit-autofill:hover,
-.identity_page input[type="submit" i]:-webkit-autofill:focus,
-.identity_page input[type="submit" i]:-webkit-autofill:active
 
-{
-  background-color: none !important;
-}
 
 .identity_page input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #b1b2b4;
